@@ -68,11 +68,32 @@ const ModalContent: React.FC<ModalContentProps> = ({
     const addToList = (): void => {
         setTerms((prev) => [...prev, ...savedTerms])
         closeModal()
+        setSavedTerms([])
     }
 
     return (
-        <div>
-            <h1>Para</h1>
+        <div className="content_modal_wrapper">
+            <h1>Parse from google</h1>
+            <div
+                suppressContentEditableWarning
+                onKeyDown={handleKeyDown}
+                className="save_block"
+                contentEditable={true}
+            >
+                <span>Copy here 2 columns </span>
+            </div>
+            <div className="new_terms_container">
+                {savedTerms.map(({ id, nameValue, definitionValue }) => (
+                    <Term
+                        key={id}
+                        changeInputValue={changeTermValue}
+                        onDelete={deleteTerm}
+                        id={id}
+                        nameValue={nameValue}
+                        definitionValue={definitionValue}
+                    />
+                ))}
+            </div>
             <Button
                 color="normal"
                 size="big"
@@ -80,21 +101,6 @@ const ModalContent: React.FC<ModalContentProps> = ({
                 text="add to form"
                 onClickHandler={addToList}
             />
-            <div
-                onKeyDown={handleKeyDown}
-                className="save_block"
-                contentEditable={true}
-            />
-            {savedTerms.map(({ id, nameValue, definitionValue }) => (
-                <Term
-                    key={id}
-                    changeInputValue={changeTermValue}
-                    onDelete={deleteTerm}
-                    id={id}
-                    nameValue={nameValue}
-                    definitionValue={definitionValue}
-                />
-            ))}
         </div>
     )
 }

@@ -1,0 +1,23 @@
+.term {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 40px;
+}
+
+.term_box_list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    margin-right: 16px;
+    margin-bottom: 16px;
+}
+
+.term_box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 25px;
+}

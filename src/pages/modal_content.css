@@ -3,3 +3,19 @@
     min-height: 100px;
     background-color: #61dafb;
 }
+
+.new_terms_container {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+    width: 400px;
+    height: 200px;
+    overflow-y: scroll;
+}
+
+.content_modal_wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}

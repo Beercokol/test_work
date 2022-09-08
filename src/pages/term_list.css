@@ -1,0 +1,21 @@
+.term_wrapper {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.term_wrapper > button {
+    width: 100px;
+}
+.term_list {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    height: 500px;
+    padding: 12px;
+    width: 400px;
+    margin: 32px;
+    border: 2px solid black;
+    overflow-y: scroll;
+}

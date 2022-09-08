@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid'
 import Term from '../components/term/term'
 import { TERMS_INPUTS_TYPE, TermType } from '../types'
 import Button from '../components/button/button'
+import './term_list.css'
 
 type TermListProps = {
     termList: Array<TermType>
@@ -48,8 +49,8 @@ export const TermList: React.FC<TermListProps> = ({
     )
 
     return (
-        <div>
-            <div>
+        <div className="term_wrapper">
+            <div className="term_list">
                 {termList.map(({ id, definitionValue, nameValue }) => (
                     <Term
                         changeInputValue={changeTermValue}

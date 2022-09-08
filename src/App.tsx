@@ -21,21 +21,23 @@ const App: React.FC = () => {
 
     return (
         <div className="App">
+            <div className="button_container">
+                <Button
+                    color="normal"
+                    size="big"
+                    type="button"
+                    text="submit form"
+                    onClickHandler={logAllTerms}
+                />
+                <Button
+                    color="normal"
+                    size="big"
+                    type="button"
+                    text="Parse from google sheets"
+                    onClickHandler={openModal}
+                />
+            </div>
             <TermList setTermList={setTerms} termList={terms} />
-            <Button
-                color="normal"
-                size="big"
-                type="button"
-                text="submit form"
-                onClickHandler={logAllTerms}
-            />
-            <Button
-                color="normal"
-                size="big"
-                type="button"
-                text="Parse from google sheets"
-                onClickHandler={openModal}
-            />
             <Modal displayModal={isModalOpen} closeModal={closeModal}>
                 <ModalContent setTerms={setTerms} closeModal={closeModal} />
             </Modal>

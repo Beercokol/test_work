@@ -2,6 +2,7 @@ import React, { ChangeEvent, useState } from 'react'
 import Input from '../input/input'
 import Button from '../button/button'
 import { TERMS_INPUTS_TYPE } from '../../types'
+import './term.css'
 
 interface ITermProps {
     nameValue: string
