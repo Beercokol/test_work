@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import { TermType } from '../types'
+import { TERMS_INPUTS_TYPE, TermType } from '../types'
 import Term from '../components/term/term'
 import { v4 as uuidv4 } from 'uuid'
 import './modal_content.css'
@@ -9,36 +9,52 @@ type ModalContentProps = {
     closeModal(): void
 }
 
-export const ModalContent: React.FC<ModalContentProps> = ({
+const ModalContent: React.FC<ModalContentProps> = ({
     setTerms,
     closeModal,
 }) => {
     const [savedTerms, setSavedTerms] = useState<TermType[]>([])
 
-    const createTermsUsingBufferText = (text: string): void => {
-        const termsArray = text
-            .split('\n')
-            .map((str) => ({
-                nameValue: str.split('\t')[0] || '',
-                definitionValue: str.split('\t')[1] || '',
-            }))
-            .map(({ nameValue, definitionValue }) => ({
-                id: uuidv4(),
-                nameValue,
-                definitionValue,
-            }))
+    // remove duplicate
+    const changeTermValue = useCallback(
+        (value: string, termId: string, type: TERMS_INPUTS_TYPE) => {
+            const neededTermIndex = savedTerms.findIndex(
+                ({ id }) => termId === id
+            )
+            const neededTerm = savedTerms.find(({ id }) => termId === id)
+            if (neededTerm) {
+                const editedTerm =
+                    type === TERMS_INPUTS_TYPE.DEF
+                        ? { ...neededTerm, definitionValue: value }
+                        : { ...neededTerm, nameValue: value }
 
-        setSavedTerms(termsArray)
-    }
-
-    const deleteTerm = useCallback(
-        (termId: string): void => {
-            setSavedTerms((prev) => prev.filter(({ id }) => id !== termId))
+                setSavedTerms((prev) => [
+                    ...prev.slice(0, neededTermIndex),
+                    editedTerm,
+                    ...prev.slice(neededTermIndex + 1),
+                ])
+            }
         },
         [savedTerms]
     )
 
-    const handleKeyDown = (event: any): any => {
+    const createTermsUsingBufferText = (text: string): void => {
+        const termsArray = text.split('\n').map((str) => ({
+            id: uuidv4(),
+            nameValue: str.split('\t')[0] || '',
+            definitionValue: str.split('\t')[1] || '',
+        }))
+
+        setSavedTerms(termsArray)
+    }
+
+    const deleteTerm = (termId: string): void => {
+        setSavedTerms((prev) => prev.filter(({ id }) => id !== termId))
+    }
+
+    const handleKeyDown = (
+        event: React.KeyboardEvent<HTMLDivElement>
+    ): void => {
         event.preventDefault()
         const charCode = String.fromCharCode(event.which).toLowerCase()
         if ((event.ctrlKey || event.metaKey) && charCode === 'v') {
@@ -72,7 +88,7 @@ export const ModalContent: React.FC<ModalContentProps> = ({
             {savedTerms.map(({ id, nameValue, definitionValue }) => (
                 <Term
                     key={id}
-                    changeInputValue={console.log}
+                    changeInputValue={changeTermValue}
                     onDelete={deleteTerm}
                     id={id}
                     nameValue={nameValue}
@@ -82,3 +98,5 @@ export const ModalContent: React.FC<ModalContentProps> = ({
         </div>
     )
 }
+
+export default React.memo(ModalContent)

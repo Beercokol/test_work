@@ -1,17 +1,16 @@
 import React from 'react'
 import './modal.css'
 
-type ModalProps = {
+interface IModalProps {
     displayModal: boolean
     closeModal(): void
     children?: React.ReactNode
 }
-export const Modal: React.FC<ModalProps> = ({
+export const Modal: React.FC<IModalProps> = ({
     displayModal,
     closeModal,
     children,
 }) => {
-    console.log('children', children)
     const divStyle = {
         display: displayModal ? 'block' : 'none',
     }

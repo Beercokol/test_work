@@ -12,21 +12,18 @@ export const TermList: React.FC<TermListProps> = ({
     termList,
     setTermList,
 }) => {
-    const deleteTerm = useCallback(
-        (termId: string): void => {
-            setTermList((prev) => prev.filter(({ id }) => id !== termId))
-        },
-        [termList]
-    )
+    const deleteTerm = (termId: string): void => {
+        setTermList((prev) => prev.filter(({ id }) => id !== termId))
+    }
 
-    const createNewTerm = useCallback((): void => {
+    const createNewTerm = (): void => {
         const newTerm = {
             id: uuidv4(),
             nameValue: '',
             definitionValue: '',
         }
         setTermList((prev) => [...prev, newTerm])
-    }, [termList])
+    }
 
     const changeTermValue = useCallback(
         (value: string, termId: string, type: TERMS_INPUTS_TYPE) => {

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import Input from '../input/input'
 import Button from '../button/button'
 import { TERMS_INPUTS_TYPE } from '../../types'
 
-type TermProps = {
+interface ITermProps {
     nameValue: string
     definitionValue: string
     id: string
@@ -14,7 +14,7 @@ type TermProps = {
         type: TERMS_INPUTS_TYPE
     ): void
 }
-const Term: React.FC<TermProps> = ({
+const Term: React.FC<ITermProps> = ({
     nameValue,
     definitionValue,
     onDelete,
@@ -23,28 +23,27 @@ const Term: React.FC<TermProps> = ({
 }) => {
     const [nameInputValue, setNameInputValue] = useState<string>(nameValue)
     const [defInputValue, setDefInputValue] = useState<string>(definitionValue)
+    // the best idea add debounce for this stuff
+    const changeNameValue = (e: ChangeEvent<HTMLInputElement>): void => {
+        setNameInputValue(e.target.value)
+        changeInputValue(e.target.value, id, TERMS_INPUTS_TYPE.NAME)
+    }
 
-    useEffect(() => {
-        changeInputValue(nameInputValue, id, TERMS_INPUTS_TYPE.NAME)
-    }, [nameInputValue])
-
-    useEffect(() => {
-        changeInputValue(defInputValue, id, TERMS_INPUTS_TYPE.DEF)
-    }, [defInputValue])
+    const changeDefValue = (e: ChangeEvent<HTMLInputElement>): void => {
+        setDefInputValue(e.target.value)
+        changeInputValue(e.target.value, id, TERMS_INPUTS_TYPE.DEF)
+    }
 
     return (
         <div className="term">
             <div className="term_box_list">
                 <div className="term_box">
                     <p>Term</p>
-                    <Input
-                        value={nameInputValue}
-                        setValue={setNameInputValue}
-                    />
+                    <Input value={nameInputValue} setValue={changeNameValue} />
                 </div>
                 <div className="term_box">
                     <p>Definition</p>
-                    <Input value={defInputValue} setValue={setDefInputValue} />
+                    <Input value={defInputValue} setValue={changeDefValue} />
                 </div>
             </div>
             <Button

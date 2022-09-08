@@ -4,7 +4,7 @@ import { TermList } from './pages/term_list'
 import { TermType } from './types'
 import Button from './components/button/button'
 import { Modal } from './components/modal/modal'
-import { ModalContent } from './pages/modal_content'
+import ModalContent from './pages/modal_content'
 
 const App: React.FC = () => {
     const [terms, setTerms] = useState<Array<TermType>>([])

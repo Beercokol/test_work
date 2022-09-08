@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 
 type InputProps = {
     value: string
-    setValue: React.Dispatch<React.SetStateAction<string>>
+    setValue(e: ChangeEvent<HTMLInputElement>): void
 }
 const Input: React.FC<InputProps> = ({ value, setValue }) => {
-    return <input value={value} onChange={(e) => setValue(e.target.value)} />
+    return <input value={value} onChange={setValue} />
 }
 
 export default React.memo(Input)
